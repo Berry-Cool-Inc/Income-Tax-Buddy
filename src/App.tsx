@@ -1,18 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Container, Box} from 'bloomer';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      <Container>
-        <Box>Hello World!</Box>
-      </Container>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
           className="App-link"

@@ -323,6 +323,12 @@ typings/
 # TypeScript cache
 *.tsbuildinfo
 
+# testing
+/coverage
+
+# production
+/build
+
 # Optional npm cache directory
 .npm
 
@@ -362,3 +368,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
