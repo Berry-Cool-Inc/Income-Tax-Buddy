@@ -1,5 +1,5 @@
 import React from 'react';
-import IncomeTaxForm from './components/IncomeTaxForm';
+import IncomeTaxForm from './components/IncomeTax/IncomeTaxComponent';
 import './assets/App.css';
 import 'antd/dist/antd.css';
 
