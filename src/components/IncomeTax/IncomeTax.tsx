@@ -10,9 +10,6 @@ export class IncomeTax {
   };
 
   public setBasicIncome = (value?: number) => {
-    if (value != null) {
-      console.log(value);
-      this.basicIncome = value;
-    }
+    if (value != null) this.basicIncome = value;
   };
 }
