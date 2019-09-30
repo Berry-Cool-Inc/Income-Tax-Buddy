@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import IncomeTaxForm from './components/IncomeTax/IncomeTaxComponent';
 import './assets/App.css';
 import 'antd/dist/antd.css';
-import { Card, Col, Row, Layout, Menu, Icon, Button, Drawer } from 'antd';
+import { Col, Row, Layout, Icon, Button, Drawer } from 'antd';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 class AppLayout extends Component {
   state = { showDrawer: false };
@@ -23,15 +23,32 @@ class AppLayout extends Component {
           onClose={this.setDrawer}
           visible={this.state.showDrawer}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <p>
+            The main aim of this web application itself is to be <b>simple and deadly fast</b> in function and user
+            outcome.
+          </p>
+          <p>
+            We may progess this project more to the point where the web application will refresh it's calculation data
+            (tax brackets, etc...) for YoY changes
+          </p>
+          <p>
+            This simple side project was meant to be a way to learn new tech-stacks like typescript and react + next.js.
+            You can view the source code on Github <br /> <br />{' '}
+            <Button
+              type="link"
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/Berry-Cool-Inc/IncomeTaxBuddy"
+            >
+              <Icon type="github" style={{ fontSize: '25px', color: 'black' }} />
+            </Button>
+          </p>
         </Drawer>
 
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
           <Row justify="end">
             {/* First navbar group */}
-            <Col>
+            <Col span="21">
               <div className="logo" />
             </Col>
             <Col>
@@ -53,16 +70,26 @@ class AppLayout extends Component {
         </Header>
         <Content
           style={{
-            margin: '85px 25% 75px 25%',
-            padding: 24,
+            margin: '150px auto',
+            padding: '45px 0 0 0',
             background: '#fff',
             minHeight: 500,
+            minWidth: 900,
+            width: '50%',
           }}
         >
           <Row type="flex" justify="center">
             <Col>
-              <h2>Simple heading</h2>
-              <div>Simple description of this web app</div>
+              <h2>Income tax calculator for period 2019-2020</h2>
+              <div>
+                A very simple web application to calculate applicable income tax. <br />{' '}
+                <b>
+                  Simply input your monthly basic income and age bracket{' '}
+                  <span role="img" aria-label="Skull">
+                    🙂
+                  </span>
+                </b>
+              </div>
               <br />
               <IncomeTaxForm />
             </Col>
