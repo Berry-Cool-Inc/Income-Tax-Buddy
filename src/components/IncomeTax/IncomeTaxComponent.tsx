@@ -1,71 +1,91 @@
 import React from 'react';
 import { CustomComponent } from '../CustomComponent';
-import { InputNumber, Card, Descriptions, Select } from 'antd';
 import { IncomeTax } from './IncomeTax';
 import formatterUtil from '../../utils/FormatterUtil';
+import numberUtil from '../../utils/NumberUtil';
 import TaxRates from './assets/TaxRates2020';
-
-const { Option } = Select;
+import { Container, Row, Col, InputGroup, FormControl, Card } from 'react-bootstrap';
+import Select from 'react-select';
 
 export class IncomeTaxForm extends CustomComponent {
+  private cssThemeOptions = {
+    noGutters: true,
+  };
+
   private incomeTax: IncomeTax;
   private taxRebateBrackets: Array<any> = [];
 
   constructor(props: {}) {
     super(props);
     this.incomeTax = new IncomeTax(0);
-    this.taxRebateBrackets = TaxRates.taxRebates;
+
+    let rebateBrackets: Array<any> = TaxRates.taxRebates;
+    rebateBrackets.forEach((value, index: number) => {
+      let lowerBound = index > 0 ? rebateBrackets[index - 1]['upperBound'] + 1 : 1;
+      let upperBound = value['upperBound'];
+      this.taxRebateBrackets.push({ value: index, label: lowerBound + ' - ' + upperBound });
+    });
   }
 
   render() {
     return (
-      <React.Fragment>
-        <Card style={{ width: 800 }}>
-          <Descriptions size="middle" bordered>
-            <Descriptions.Item label="Please select your age group" span={3}>
-              <Select
-                defaultValue={this.incomeTax.getAgeBracket()}
-                style={{ width: 200 }}
-                onChange={(value: number) => {
-                  this.renderOnSet(this.incomeTax.setAgeBracket, value);
-                }}
-              >
-                {this.taxRebateBrackets.map((value, index: number) => {
-                  let lowerBound = index > 0 ? this.taxRebateBrackets[index - 1]['upperBound'] + 1 : 1;
-                  let upperBound = value['upperBound'];
-                  return (
-                    <Option key={index} value={index}>
-                      {lowerBound} - {upperBound}
-                    </Option>
-                  );
-                })}
-              </Select>
-            </Descriptions.Item>
-            <Descriptions.Item label="Enter your income per month before deductions" span={3}>
-              <InputNumber
-                size="large"
-                autoFocus={true}
-                step={1000}
-                style={{ width: 200 }}
-                onChange={value => {
+      <Container>
+        <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
+          <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
+            Please select your age group
+          </Col>
+          <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              defaultValue={this.taxRebateBrackets[0]}
+              isClearable={false}
+              isSearchable={false}
+              options={this.taxRebateBrackets}
+              onChange={(selectIndex: any) => {
+                this.renderOnSet(this.incomeTax.setTotalAmountBeforeTax, selectIndex['value']);
+              }}
+            />
+          </Col>
+        </Row>
+        <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
+          <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
+            Enter your income per month before deductions
+          </Col>
+          <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>R</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
+                inputMode="number"
+                aria-label="Basic Income (to the nearest Rand)"
+                value={String(this.incomeTax.getTotalAmountBeforeTax())}
+                onChange={(event: any) => {
+                  let value: number = numberUtil.formatNumberStringAsNumberWithReplacement(event.target.value);
                   this.renderOnSet(this.incomeTax.setTotalAmountBeforeTax, value);
                 }}
-                min={0}
-                formatter={() => formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalAmountBeforeTax())}
-                parser={value => {
-                  return value ? value.replace(/R\s?|(,*)/g, '') : '';
-                }}
               />
-            </Descriptions.Item>
-            <Descriptions.Item label="Monthly income tax deducation" span={3}>
-              {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalTax())}
-            </Descriptions.Item>
-            <Descriptions.Item label="Total monthly earnings after tax" span={3}>
-              {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalAmountAfterTax())}
-            </Descriptions.Item>
-          </Descriptions>
-        </Card>
-      </React.Fragment>
+            </InputGroup>
+          </Col>
+        </Row>
+        <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
+          <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
+            Monthly income tax deducation
+          </Col>
+          <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
+            {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalTax())}
+          </Col>
+        </Row>
+        <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
+          <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
+            Total monthly earnings after tax
+          </Col>
+          <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
+            {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalAmountAfterTax())}
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
