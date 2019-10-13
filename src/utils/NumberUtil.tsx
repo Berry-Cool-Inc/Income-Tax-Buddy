@@ -1,7 +1,6 @@
-function formatNumberStringAsNumberWithReplacement(value: String) {
+function formatNumberStringAsNumberWithReplacement(value: string) {
   // Replace all text in variable
-  let pattern = /[^(^\d+\.\d{0,2})]/g;
-  return Number(value.replace(pattern, ''));
+  return Number(value);
 }
 
 export default { formatNumberStringAsNumberWithReplacement };

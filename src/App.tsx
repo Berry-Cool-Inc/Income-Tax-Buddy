@@ -28,7 +28,7 @@ class AppLayout extends Component {
               <Nav.Link
                 eventKey={2}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 href="https://github.com/Berry-Cool-Inc/IncomeTaxBuddy"
               >
                 Out Github <FontAwesomeIcon icon={faGithub} />
@@ -67,8 +67,8 @@ class AppLayout extends Component {
               This simple side project was meant to be a way to learn new tech-stacks like typescript and react +
               next.js. You can view the source code on Github <br /> <br />{' '}
               <p style={{ textAlign: 'center' }}>
-                <a target="_blank" rel="noreferrer" href="https://github.com/Berry-Cool-Inc/IncomeTaxBuddy">
-                  <FontAwesomeIcon icon={faGithub} size="2x" color="black" />
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/Berry-Cool-Inc/IncomeTaxBuddy">
+                  <FontAwesomeIcon icon={faGithub} size="2x" color="#6c757d" />
                 </a>
               </p>
             </p>

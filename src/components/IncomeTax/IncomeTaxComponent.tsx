@@ -4,7 +4,7 @@ import { IncomeTax } from './IncomeTax';
 import formatterUtil from '../../utils/FormatterUtil';
 import numberUtil from '../../utils/NumberUtil';
 import TaxRates from './assets/TaxRates2020';
-import { Container, Row, Col, InputGroup, FormControl, Card } from 'react-bootstrap';
+import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 import Select from 'react-select';
 
 export class IncomeTaxForm extends CustomComponent {
@@ -43,7 +43,7 @@ export class IncomeTaxForm extends CustomComponent {
               isSearchable={false}
               options={this.taxRebateBrackets}
               onChange={(selectIndex: any) => {
-                this.renderOnSet(this.incomeTax.setTotalAmountBeforeTax, selectIndex['value']);
+                this.renderOnSet(this.incomeTax.setAgeBracket, selectIndex['value']);
               }}
             />
           </Col>
@@ -58,7 +58,7 @@ export class IncomeTaxForm extends CustomComponent {
                 <InputGroup.Text>R</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
-                inputMode="number"
+                type="number"
                 aria-label="Basic Income (to the nearest Rand)"
                 value={String(this.incomeTax.getTotalAmountBeforeTax())}
                 onChange={(event: any) => {
