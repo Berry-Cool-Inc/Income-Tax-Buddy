@@ -52,8 +52,8 @@ textarea {
 
 input[type='number']:focus,
 textarea:focus {
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-  border: 1px solid rgba(81, 203, 238, 1);
+  box-shadow: 0 0 5px #1890ff;
+  border: 1px solid #1890ff;
 }
 
 input:invalid {

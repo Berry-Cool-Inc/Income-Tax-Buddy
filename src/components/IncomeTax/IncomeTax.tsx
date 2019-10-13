@@ -6,11 +6,14 @@ export class IncomeTax extends Tax {
   taxRebates: Array<any> = [];
   ageBracket: number;
 
+  rebateAmount: number;
+
   constructor(basicIncome: number) {
     super(basicIncome);
     this.taxBrackets = TaxRates.taxBrackets;
     this.taxRebates = TaxRates.taxRebates;
     this.ageBracket = 0;
+    this.rebateAmount = 0;
   }
 
   getAgeBracket = () => {
@@ -24,6 +27,14 @@ export class IncomeTax extends Tax {
     }
   };
 
+  setRebateAmount = (value?: number) => {
+    if (value) this.rebateAmount = value;
+  };
+
+  getRebateAmount = () => {
+    return this.rebateAmount;
+  };
+
   setTotalAmountBeforeTax = (value?: number) => {
     if (value) {
       this.totalAmountBeforeTax = value;
@@ -35,6 +46,8 @@ export class IncomeTax extends Tax {
   calculateTax = () => {
     const basicIncome = this.getTotalAmountBeforeTax();
     let taxAmount = 0;
+    let rebateAmount = 0;
+    let effectiveTaxableAmount = 0;
 
     if (basicIncome === 0) return null;
 
@@ -44,14 +57,20 @@ export class IncomeTax extends Tax {
       if (basicIncome < upperBound || i + 1 === this.taxBrackets.length) {
         let lowerBound = i > 0 ? this.taxBrackets[i - 1]['upperBound'] / 12 : 1;
         let percentage = this.taxBrackets[i]['percentage'] / 100;
-        let rebateAmount = this.taxRebates[this.getAgeBracket()]['amount'] / 12;
-        taxAmount = this.taxBrackets[i]['taxForBracket'] / 12 + (basicIncome - lowerBound) * percentage - rebateAmount;
-        taxAmount = taxAmount < 0 ? 0 : taxAmount;
+        rebateAmount = this.taxRebates[this.getAgeBracket()]['amount'] / 12;
+        taxAmount = this.taxBrackets[i]['taxForBracket'] / 12 + (basicIncome - lowerBound) * percentage;
         break;
       }
     }
 
+    if (rebateAmount > taxAmount) {
+      rebateAmount = taxAmount;
+    } else {
+      effectiveTaxableAmount = taxAmount - rebateAmount;
+    }
+
+    this.setRebateAmount(rebateAmount);
     this.setTotalTax(taxAmount);
-    this.setTotalAmountAfterTax(this.getTotalAmountBeforeTax() - taxAmount);
+    this.setTotalAmountAfterTax(this.getTotalAmountBeforeTax() - effectiveTaxableAmount);
   };
 }

@@ -1,5 +1,5 @@
 function formatNumberStringAsNumberWithReplacement(value: string) {
-  // Replace all text in variable
+  // Replace all text in variablegot
   return Number(value);
 }
 

@@ -4,8 +4,12 @@ import { IncomeTax } from './IncomeTax';
 import formatterUtil from '../../utils/FormatterUtil';
 import numberUtil from '../../utils/NumberUtil';
 import TaxRates from './assets/TaxRates2020';
-import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Row, Col, InputGroup, FormControl, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
 import Select from 'react-select';
+import config from '../../config';
+
+import { faPlus, faMinus, faEquals, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class IncomeTaxForm extends CustomComponent {
   private cssThemeOptions = {
@@ -55,7 +59,7 @@ export class IncomeTaxForm extends CustomComponent {
           <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
             <InputGroup>
               <InputGroup.Prepend>
-                <InputGroup.Text>R</InputGroup.Text>
+                <InputGroup.Text>{config.currencyFormat.symbol}</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
                 type="number"
@@ -71,7 +75,37 @@ export class IncomeTaxForm extends CustomComponent {
         </Row>
         <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
           <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
-            Monthly income tax deducation
+            <FontAwesomeIcon icon={faPlus} color="#389e0d" size="xs" /> Monthly tax rebate given back{' '}
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                <Popover id="">
+                  <Popover.Content>Amount to be reclaimed from SARS.</Popover.Content>
+                </Popover>
+              }
+            >
+              <FontAwesomeIcon icon={faQuestionCircle} color="#262626" size="xs" />
+            </OverlayTrigger>
+          </Col>
+          <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
+            {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getRebateAmount())}
+          </Col>
+        </Row>
+        <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
+          <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
+            <FontAwesomeIcon icon={faMinus} color="#d4380d" size="xs" /> Monthly income tax deducation{' '}
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                <Popover id="">
+                  <Popover.Content>Total monthly tax due to be paid to SARS.</Popover.Content>
+                </Popover>
+              }
+            >
+              <FontAwesomeIcon icon={faQuestionCircle} color="#262626" size="xs" />
+            </OverlayTrigger>
           </Col>
           <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
             {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalTax())}
@@ -79,7 +113,8 @@ export class IncomeTaxForm extends CustomComponent {
         </Row>
         <Row className={'incomeTaxRow'} noGutters={this.cssThemeOptions['noGutters']}>
           <Col className={'incomeTaxDisplayGroupText'} xs={12} md={8} lg={6}>
-            Total monthly earnings after tax
+            <FontAwesomeIcon icon={faEquals} color="#262626" size="xs" /> Effective monthly earnings after tax and
+            rebate
           </Col>
           <Col className={'incomeTaxDisplayGroupInput'} xs={12} md={4} lg={6}>
             {formatterUtil.formatValueToCurrencyDisplay(this.incomeTax.getTotalAmountAfterTax())}

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import IncomeTaxForm from './components/IncomeTax/IncomeTaxComponent';
 import './assets/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/react-fontawesome';
 import { Navbar, Nav, Modal, Container, Button } from 'react-bootstrap';
+import config from './config';
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,12 +25,7 @@ class AppLayout extends Component {
             <Nav className="mr-auto"></Nav>
             <Nav>
               <Nav.Link onClick={this.setModalState}>About the app</Nav.Link>
-              <Nav.Link
-                eventKey={2}
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://github.com/Berry-Cool-Inc/IncomeTaxBuddy"
-              >
+              <Nav.Link eventKey={2} target="_blank" rel="noopener noreferrer" href={config.githubRepo}>
                 Out Github <FontAwesomeIcon icon={faGithub} />
               </Nav.Link>
             </Nav>
@@ -40,12 +35,12 @@ class AppLayout extends Component {
           <h4>Income tax calculator for period 2019-2020</h4>
           <div>
             A very simple web application to calculate applicable income tax. <br />{' '}
-            <b>
-              Simply input your monthly basic income and age bracket
+            <strong>
+              Simply input your monthly basic income and age bracket{' '}
               <span role="img" aria-label="Skull">
                 🙂
               </span>
-            </b>
+            </strong>
           </div>
           <br />
           <IncomeTaxForm></IncomeTaxForm>
@@ -56,7 +51,7 @@ class AppLayout extends Component {
           </Modal.Header>
           <Modal.Body>
             <p>
-              The main aim of this web application itself is to be <b>simple and deadly fast</b> in function and user
+              The main aim of this web application is to be <b>simple and deadly fast</b> in function and user story
               outcome.
             </p>
             <p>
@@ -64,10 +59,10 @@ class AppLayout extends Component {
               (tax brackets, etc...) for YoY changes
             </p>
             <p>
-              This simple side project was meant to be a way to learn new tech-stacks like typescript and react +
-              next.js. You can view the source code on Github <br /> <br />{' '}
+              This side project was meant to be simple way to learn new tech-stacks like typescript and react. You can
+              view the source code on Github <br /> <br />{' '}
               <p style={{ textAlign: 'center' }}>
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/Berry-Cool-Inc/IncomeTaxBuddy">
+                <a target="_blank" rel="noopener noreferrer" href={config.githubRepo}>
                   <FontAwesomeIcon icon={faGithub} size="2x" color="#6c757d" />
                 </a>
               </p>
