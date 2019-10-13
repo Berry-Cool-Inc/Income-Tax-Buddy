@@ -15,3 +15,47 @@
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
+
+.appBackDrop {
+  background-color: #f0f2f5;
+  height: 100vh;
+}
+
+.incomeTaxDisplayGridTheme {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 45px 45px !important;
+  margin-top: 5vh;
+  background-color: #ffffff;
+}
+
+.incomeTaxDisplayGroupText {
+  background: #fafafa;
+  padding: 12px 12px !important;
+  border: 1px solid #e8e8e8;
+}
+
+.incomeTaxDisplayGroupInput {
+  background: #ffffff;
+  padding: 12px 12px !important;
+  border: 1px solid #e8e8e8;
+}
+
+input[type='number'],
+textarea {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  outline: none;
+  border: 1px solid #dddddd;
+}
+
+input[type='number']:focus,
+textarea:focus {
+  box-shadow: 0 0 5px #1890ff;
+  border: 1px solid #1890ff;
+}
+
+input:invalid {
+  box-shadow: 0 0 0px;
+}
